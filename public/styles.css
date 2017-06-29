@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
+header {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+header a {
+    margin-left: 20px;
+}
+
+.errors {
+    margin-top: 20px;
+}
