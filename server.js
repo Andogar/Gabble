@@ -28,21 +28,43 @@ application.get('/', (request, response) => {
 });
 
 application.get('/index', (request, response) => {
-    response.render('index', request.session)
+    if (request.session.isAuthenticated) {
+        response.render('index-logged-in', request.session);
+    } else {
+        response.render('index', request.session);
+    }
+});
+
+application.get('/gab', (request, response) => {
+    if (!request.session.isAuthenticated) {
+        response.redirect('/index');
+    } else {
+        response.render('gab');
+    }
+});
+
+application.post('/gab', (request, response) => {
+    var gab = request.body.gab;
+
+
 });
 
 application.get('/login', (request, response) => {
     response.render('login')
 });
 
-application.post('/login', (request, response) => {
+application.post('/login', async (request, response) => {
     var name = request.body.username;
     var password = request.body.password;
 
-    var findUser = models.users.findOne({ where: { username: name, password: password } });
+    var userList = await models.users.all();
+    var query = { where: { username: name, password: password} };
+    var user = await models.users.find(query);
 
-    if (findUser) {
+    if (user) {
         request.session.user = name;
+        request.session.isAuthenticated = true;
+        request.session.userId = user.dataValues.id;
         response.redirect('/index');
     } else {
         response.render('login');
@@ -50,7 +72,7 @@ application.post('/login', (request, response) => {
 });
 
 application.get('/register', (request, response) => {
-    response.render('register')
+    response.render('register');
 });
 
 application.post('/register', (request, response) => {
@@ -71,7 +93,7 @@ application.post('/register', (request, response) => {
     //only print out first item in array if they do so only one error appears
 
     request.session.errors = request.validationErrors();
-    
+
     if (request.session.errors) {
         response.render('register', request.session);
     } else {
