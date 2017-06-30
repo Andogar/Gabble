@@ -6,7 +6,8 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   likes.associate = function (models) {
-    // associations can be defined here
+    likes.belongsTo(models.users, { foreignKey: 'userId' });
+    likes.belongsTo(models.gabs, { foreignKey: 'gabId' });
   }
 
   return likes;

@@ -7,6 +7,7 @@ module.exports = function (sequelize, DataTypes) {
 
   gabs.associate = function (models) {
     gabs.belongsTo(models.users, { foreignKey: 'userId' });
+    gabs.hasMany(models.likes);
   }
 
   return gabs;

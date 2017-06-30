@@ -11,16 +11,16 @@
     <header>
         <a href="/index">Home</a>
         <a href="/index/gab">Create a gab</a>
-        <a href="/index">Currently logged in as {{user}}</a>
+        <a href="/index">Currently logged in as {{currentUser}}</a>
         <a href="/logout">Log Out</a>
     </header>
-    <h1>Welcome {{user}}!</h1>
+    <h1>Welcome {{currentUser}}!</h1>
 
     <div class="gabs">
         {{#gabs}}
-            {{#dataValues}}
-            {{content}}
-            {{/dataValues}}
+        <p>{{content}}</p>
+        <p>By {{user.username}}</p>
+        <a href="/index/gab/:id">>Has {{likes.length}} likes</a>
         {{/gabs}}
     </div>
 </body>

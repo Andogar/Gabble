@@ -25,19 +25,20 @@ application.use(expressValidator());
 
 application.use('/public', express.static('./public'));
 
-application.get('/', (request, response) => {
+application.get('/', async (request, response) => {
     response.redirect('/index')
 });
 
 application.get('/index', async (request, response) => {
+    var gabs = await models.gabs.all({ include: [models.users, models.likes] });
+    var model = {
+        currentUser: request.session.user,
+        gabs: gabs
+    };
     if (request.session.isAuthenticated) {
-        var gabs = await models.gabs.findAll();
-        request.session.gabs = gabs;
-
-        // need to make a model with database information in it as to not overload session
-        response.render('index-logged-in', request.session);
+        response.render('index-logged-in', model);
     } else {
-        response.render('index', request.session);
+        response.render('index', model);
     }
 });
 
@@ -52,10 +53,24 @@ application.get('/index/gab', (request, response) => {
 application.post('/index/gab', (request, response) => {
     var gab = request.body.gabText;
 
-    models.gabs.create({
-        content: gab,
-        userId: request.session.userId
-    }).then(result => response.redirect('/index'));
+    request.checkBody('gabText', 'Gab must be between 1 and 140 characters').notEmpty().len(1, 140);
+    var errors = request.validationErrors();
+
+
+    if (!errors) {
+        var gab = request.body.gabText;
+
+        models.gabs.create({
+            content: gab,
+            userId: request.session.userId
+        }).then(result => response.redirect('/index'));
+    } else {
+        var model = {
+            error: errors[0].msg
+        }
+        response.render('gab', model);
+    }
+
 });
 
 
