@@ -9,7 +9,7 @@ router.get('/index/register', (request, response) => {
     response.render('register');
 });
 
-router.post('/index/register', (request, response) => {
+router.post('/index/register', async (request, response) => {
     var name = request.body.username;
     var password = request.body.password;
     var passwordConfirm = request.body.passwordConfirm;
@@ -26,7 +26,7 @@ router.post('/index/register', (request, response) => {
     if (request.session.errors) {
         response.render('register', request.session);
     } else {
-        models.users.create({
+        var register = await models.users.create({
             username: name,
             password: password
         }).then(result => response.redirect('/index'));

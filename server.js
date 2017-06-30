@@ -3,8 +3,13 @@ const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
+
+const indexController = require('./controllers/index-controller');
+const gabAddController = require('./controllers/gab-add-controller');
+const gabGrabController = require('./controllers/gab-grab-controller');
 const loginController = require('./controllers/login-controller');
 const registerController = require('./controllers/register-controller');
+const logoutController = require('./controllers/logout-controller');
 
 const models = require('./models');
 
@@ -23,59 +28,16 @@ application.use(session({
 application.use(bodyParser.urlencoded());
 application.use(expressValidator());
 
-application.use('/public', express.static('./public'));
+application.use(express.static(__dirname + '/public'));
 
-application.get('/', async (request, response) => {
-    response.redirect('/index')
-});
+// todo: create a "My Gabs" page where you can delete and edit your gabs.
+// route: index/gabs/mygabs
 
-application.get('/index', async (request, response) => {
-    var gabs = await models.gabs.all({ include: [models.users, models.likes] });
-    var model = {
-        currentUser: request.session.user,
-        gabs: gabs
-    };
-    if (request.session.isAuthenticated) {
-        response.render('index-logged-in', model);
-    } else {
-        response.render('index', model);
-    }
-});
-
-application.get('/index/gab', (request, response) => {
-    if (!request.session.isAuthenticated) {
-        response.redirect('/index');
-    } else {
-        response.render('gab');
-    }
-});
-
-application.post('/index/gab', (request, response) => {
-    var gab = request.body.gabText;
-
-    request.checkBody('gabText', 'Gab must be between 1 and 140 characters').notEmpty().len(1, 140);
-    var errors = request.validationErrors();
-
-
-    if (!errors) {
-        var gab = request.body.gabText;
-
-        models.gabs.create({
-            content: gab,
-            userId: request.session.userId
-        }).then(result => response.redirect('/index'));
-    } else {
-        var model = {
-            error: errors[0].msg
-        }
-        response.render('gab', model);
-    }
-
-});
-
-
+application.use(indexController);
+application.use(gabAddController);
+application.use(gabGrabController);
 application.use(loginController);
 application.use(registerController);
-
+application.use(logoutController);
 
 application.listen(3000);

@@ -4,25 +4,30 @@
 <head>
     <meta charset="utf-8">
     <title>Gabby</title>
-    <link rel="stylesheet" href="../public/styles.css">
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
     <header>
         <a href="/index">Home</a>
-        <a href="/index/gab">Create a gab</a>
-        <a href="/index">Currently logged in as {{currentUser}}</a>
-        <a href="/logout">Log Out</a>
+        <a href="/index/gab-add">Create a gab</a>
+        <p>Currently logged in as {{currentUser}}</p>
+        <form method="post" action="/index/logout">
+            <button type ="submit">Logout</button>
+        </form>
     </header>
     <h1>Welcome {{currentUser}}!</h1>
 
+    {{#gabs}}
     <div class="gabs">
-        {{#gabs}}
         <p>{{content}}</p>
         <p>By {{user.username}}</p>
-        <a href="/index/gab/:id">>Has {{likes.length}} likes</a>
-        {{/gabs}}
+        <form method="post" action="/index/gabGrab/{{id}}">
+            <button type="submit">Like</button>
+        </form>
+        <a href="/index/gabGrab/{{id}}">Has {{likes.length}} likes</a>
     </div>
+    {{/gabs}}
 </body>
 
 </html>
