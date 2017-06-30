@@ -3,18 +3,26 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Gabble</title>
+    <title>Gabby</title>
     <link rel="stylesheet" href="../public/styles.css">
 </head>
 
 <body>
     <header>
         <a href="/index">Home</a>
-        <a href="/gab">Create a gab</a>
+        <a href="/index/gab">Create a gab</a>
         <a href="/index">Currently logged in as {{user}}</a>
         <a href="/logout">Log Out</a>
     </header>
     <h1>Welcome {{user}}!</h1>
+
+    <div class="gabs">
+        {{#gabs}}
+            {{#dataValues}}
+            {{content}}
+            {{/dataValues}}
+        {{/gabs}}
+    </div>
 </body>
 
 </html>

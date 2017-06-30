@@ -3,20 +3,20 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Gabble</title>
+    <title>Gabby</title>
     <link rel="stylesheet" href="../public/styles.css">
 </head>
 
 <body>
     <header>
         <a href="/index">Home</a>
-        <a href="/gab">Create a gab</a>
+        <a href="/index/gab">Create a gab</a>
         <a href="/index">Currently logged in as {{user}}</a>
         <a href="/logout">Log Out</a>
     </header>
     <h2>Create a new gab</h2>
-    <form method="POST" action="/index/edit/{{id}}" class="edit">
-        <textarea name="gab" rows="4" cols="50"> </textarea> <br />
+    <form method="POST" action="/index/gab" class="gab">
+        <textarea name="gabText" rows="4" cols="50"> </textarea> <br />
         <button type="submit">Post gab</button>
     </form>
 

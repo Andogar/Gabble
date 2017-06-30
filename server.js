@@ -3,6 +3,8 @@ const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
+const loginController = require('./controllers/login-controller');
+const registerController = require('./controllers/register-controller');
 
 const models = require('./models');
 
@@ -27,15 +29,19 @@ application.get('/', (request, response) => {
     response.redirect('/index')
 });
 
-application.get('/index', (request, response) => {
+application.get('/index', async (request, response) => {
     if (request.session.isAuthenticated) {
+        var gabs = await models.gabs.findAll();
+        request.session.gabs = gabs;
+
+        // need to make a model with database information in it as to not overload session
         response.render('index-logged-in', request.session);
     } else {
         response.render('index', request.session);
     }
 });
 
-application.get('/gab', (request, response) => {
+application.get('/index/gab', (request, response) => {
     if (!request.session.isAuthenticated) {
         response.redirect('/index');
     } else {
@@ -43,65 +49,18 @@ application.get('/gab', (request, response) => {
     }
 });
 
-application.post('/gab', (request, response) => {
-    var gab = request.body.gab;
+application.post('/index/gab', (request, response) => {
+    var gab = request.body.gabText;
 
-
+    models.gabs.create({
+        content: gab,
+        userId: request.session.userId
+    }).then(result => response.redirect('/index'));
 });
 
-application.get('/login', (request, response) => {
-    response.render('login')
-});
 
-application.post('/login', async (request, response) => {
-    var name = request.body.username;
-    var password = request.body.password;
+application.use(loginController);
+application.use(registerController);
 
-    var userList = await models.users.all();
-    var query = { where: { username: name, password: password} };
-    var user = await models.users.find(query);
-
-    if (user) {
-        request.session.user = name;
-        request.session.isAuthenticated = true;
-        request.session.userId = user.dataValues.id;
-        response.redirect('/index');
-    } else {
-        response.render('login');
-    }
-});
-
-application.get('/register', (request, response) => {
-    response.render('register');
-});
-
-application.post('/register', (request, response) => {
-    var name = request.body.username;
-    var password = request.body.password;
-    var passwordConfirm = request.body.passwordConfirm;
-    var passREGEX = '/^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/';
-    var nameREGEX = '/^[a-zA-Z\s]*$/';
-
-    request.checkBody('username', 'Username must be letters and spaces only.')
-        .matches(nameREGEX);
-    request.checkBody('password', 'Password must by at least 8 characters and contain at least one number or non alpha-numeric character.')
-        .matches(passREGEX);
-    request.checkBody('passwordConfirm', 'Passwords must match.')
-        .matches(request.body.password);
-
-    //todo: check if validation errors come out as an array
-    //only print out first item in array if they do so only one error appears
-
-    request.session.errors = request.validationErrors();
-
-    if (request.session.errors) {
-        response.render('register', request.session);
-    } else {
-        models.users.create({
-            username: name,
-            password: password
-        }).then(result => response.redirect('/index'));
-    }
-});
 
 application.listen(3000);
