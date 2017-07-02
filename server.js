@@ -7,6 +7,8 @@ const expressValidator = require('express-validator');
 const indexController = require('./controllers/index-controller');
 const gabAddController = require('./controllers/gab-add-controller');
 const gabGrabController = require('./controllers/gab-grab-controller');
+const myGabsController = require('./controllers/mygabs-controller');
+const gabDeleteController = require('./controllers/gab-delete-controller');
 const loginController = require('./controllers/login-controller');
 const registerController = require('./controllers/register-controller');
 const logoutController = require('./controllers/logout-controller');
@@ -30,24 +32,11 @@ application.use(expressValidator());
 
 application.use(express.static(__dirname + '/public'));
 
-// todo: create a "My Gabs" page where you can delete and edit your gabs.
-// route: index/gabs/mygabs
-
-application.get('/index/mygabs', async (request, response) => {
-    var gabQuery = { where: { userId: request.session.userId }, include: [models.users, models.likes] };
-    var gabs = await models.gabs.findAll(gabQuery);
-
-    var model = {
-        currentUser: request.session.user,
-        gabs: gabs
-    };
-
-    response.render('mygabs', model);
-});
-
 application.use(indexController);
 application.use(gabAddController);
 application.use(gabGrabController);
+application.use(myGabsController);
+application.use(gabDeleteController);
 application.use(loginController);
 application.use(registerController);
 application.use(logoutController);

@@ -11,9 +11,9 @@
     <header>
         <a href="/index">Home</a>
         <a href="/index/gab-add">Create a gab</a>
-        <p>Currently logged in as {{currentUser}}</p>
+        <a href="/index/mygabs">My Gabs</a>
         <form method="post" action="/index/logout">
-            <button type ="submit">Logout</button>
+            <button type="submit">Logout</button>
         </form>
     </header>
     <h1>Here are your gabs, {{currentUser}}.</h1>
@@ -21,8 +21,12 @@
     {{#gabs}}
     <div class="gabs">
         <p>{{content}}</p>
+        <p>{{createdAt}}</p>
         <p>By {{user.username}}</p>
         <a href="/index/gabGrab/{{id}}">Has {{likes.length}} likes</a>
+        <form method="POST" action="/index/mygabs/delete/{{id}}" class="gab">
+            <button type="submit">Delete Gab</button>
+        </form>
     </div>
     {{/gabs}}
 </body>
