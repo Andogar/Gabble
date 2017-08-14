@@ -8,6 +8,7 @@ router.use(bodyParser.urlencoded());
 router.use(expressValidator());
 
 router.get('/index/register', (request, response) => {
+
     response.render('register');
 });
 
@@ -16,8 +17,8 @@ router.post('/index/register', async (request, response) => {
     var password = request.body.password;
     var passwordConfirm = request.body.passwordConfirm;
 
-    request.checkBody('username', 'Username must be one word and may include numbers.')
-        .matches(/[\w]+$/);
+    request.checkBody('username', 'Username must be less than 20 characters and can only contain letters, numbers, "_" and "-" .')
+        .matches(/^[a-zA-Z0-9_.-]{0,20}$/);
     request.checkBody('password', 'Password must by at least 8 characters and contain at least one number or non alpha-numeric character.')
         .matches(/^(?=.{8})(?=.*[^a-zA-Z])/);
     request.checkBody('passwordConfirm', 'Passwords must match.')
@@ -31,7 +32,8 @@ router.post('/index/register', async (request, response) => {
         var register = await models.users.create({
             username: name,
             password: password
-        }).then(result => response.redirect('/index'));
+        });
+        response.redirect('/index');
     }
 });
 

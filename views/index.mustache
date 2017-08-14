@@ -3,24 +3,40 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Gabby</title>
+    <title>Gabble</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
-    <header>
-        <a href="/index">Home</a>
-        <a href="/index/gab-add">Create a gab</a>
-        <a href="/index/login">Log In</a>
-        <a href="/index/register">Register</a>
-    </header>
-    <h1>Hello, please either log in or register to begin.</h1>
-
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">Gabble</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/index">Home</a></li>
+                    <li><a href="/index/gab-add">Create a gab</a></li>
+                    <li><a href="/index/login">Log In</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/index/register">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>Hello, please either log in or register to begin.</h1>
+    </div>
     {{#gabs}}
-    <div class="gabs">
-        <p>{{content}}</p>
-        <p>By {{user.username}}</p>
-        <a href="/index/gabGrab/{{id}}">Has {{likes.length}} likes</a>
+    <div class="panel panel-info gabs">
+        <div class="panel-body">
+            <p>{{content}}</p>
+            <p>Posted by {{user.username}} on {{createdAt}}.</p>
+        </div>
+        <div class="panel-heading">Has {{likes.length}} <a href="/index/gabGrab/{{id}}">likes</a>.</div>
     </div>
     {{/gabs}}
 </body>

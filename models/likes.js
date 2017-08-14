@@ -9,6 +9,5 @@ module.exports = function (sequelize, DataTypes) {
     likes.belongsTo(models.users, { foreignKey: 'userId' });
     likes.belongsTo(models.gabs, { foreignKey: 'gabId' });
   }
-
   return likes;
 };

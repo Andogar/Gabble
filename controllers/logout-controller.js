@@ -10,9 +10,4 @@ router.get('/index/logout', (request, response) => {
     }
 });
 
-router.post('/index/logout', (request, response) => {
-    request.session.destroy();
-    response.redirect('/index');
-});
-
 module.exports = router;

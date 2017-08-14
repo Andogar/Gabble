@@ -16,7 +16,7 @@ router.get('/index/gabGrab/:id', async (request, response) => {
         };
         response.render('gabgrab', model);
     } else {
-        response.redirect('/index');
+        response.redirect('/index/login');
     }
 });
 

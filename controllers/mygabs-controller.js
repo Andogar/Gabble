@@ -13,7 +13,7 @@ router.get('/index/mygabs', async (request, response) => {
         };
         response.render('mygabs', model);
     } else {
-        response.redirect('/index');
+        response.redirect('/index/login');
     }
 });
 

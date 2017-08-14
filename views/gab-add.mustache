@@ -3,24 +3,41 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Gabby</title>
+    <title>Gabble</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
-    <header>
-        <a href="/index">Home</a>
-        <a href="/index/gab-add">Create a gab</a>
-        <a href="/index/mygabs">My Gabs</a>
-        <form method="post" action="/index/logout">
-            <button type="submit">Logout</button>
-        </form>
-    </header>
-    </header>
-    <h2>Create a new gab</h2>
-    <form method="POST" action="/index/gab-add" class="gab">
-        <textarea name="gabText" rows="4" cols="50"></textarea> <br />
-        <button type="submit">Post gab</button>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">Gabble</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/index">Home</a></li>
+                    <li><a href="/index/gab-add">Create a gab</a></li>
+                    <li><a href="/index/mygabs">My Gabs</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/index/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>Create a new gab</h1>
+    </div>
+    <form method="POST" action="/index/gab-add" class="add-gab">
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-globe"></i></span>
+            <input type="text" class="form-control" name="gabText" placeholder="Must be between 1-140 characters" aria-describedby="sizing-addon1">
+        </div>
+        <div class="btn-group" role="group">
+            <button type="submit" class="btn btn-primary btn-block">Post Gab</button>
+        </div>
     </form>
     <p>{{error}}</p>
 
