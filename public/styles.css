@@ -11,8 +11,10 @@ header a {
 }
 
 .gabs, .list-group {
-    max-width: 40%;
-    margin-left: 1%;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 2rem;
 } 
 
 #login-form, #register-form {
@@ -32,4 +34,9 @@ header a {
 .add-gab {
     max-width: 50%;
     margin-left: 1%;
+}
+
+.background {
+    background-image: url("./background.jpg");
+    background-size: 100%;
 }
