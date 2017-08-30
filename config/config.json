@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "andogar",
-    "password": null,
-    "database": "Gabby",
-    "host": "127.0.0.1",
+    "username": "oigflmpuswsjhf",
+    "password": "81a909a06a2b576c51d788bd7371bf23766716e921319e17be1c294f684e824c",
+    "database": "d6rtakeclcj2hp",
+    "host": "ec2-54-225-113-161.compute-1.amazonaws.com",
     "dialect": "postgres"
   },
   "test": {
-    "username": "andogar",
-    "password": null,
-    "database": "Gabby",
-    "host": "127.0.0.1",
+    "username": "oigflmpuswsjhf",
+    "password": "81a909a06a2b576c51d788bd7371bf23766716e921319e17be1c294f684e824c",
+    "database": "d6rtakeclcj2hp",
+    "host": "ec2-54-225-113-161.compute-1.amazonaws.com",
     "dialect": "postgres"
   },
   "production": {
-    "username": "andogar",
-    "password": null,
-    "database": "Gabby",
-    "host": "127.0.0.1",
+    "username": "oigflmpuswsjhf",
+    "password": "81a909a06a2b576c51d788bd7371bf23766716e921319e17be1c294f684e824c",
+    "database": "d6rtakeclcj2hp",
+    "host": "ec2-54-225-113-161.compute-1.amazonaws.com",
     "dialect": "postgres"
   }
 }
