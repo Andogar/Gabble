@@ -3,6 +3,7 @@ const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
+const pg = require('pg');
 
 const indexController = require('./controllers/index-controller');
 const gabAddController = require('./controllers/gab-add-controller');
@@ -41,4 +42,21 @@ application.use(loginController);
 application.use(registerController);
 application.use(logoutController);
 
-application.listen(3000);
+application.set('port', process.env.PORT || 3000)
+
+application.listen(application.get('port'), function () {
+    console.log('app starting on port: ', application.get('port'))
+});
+
+
+// pg.defaults.ssl = true;
+// pg.connect(process.env.DATABASE_URL, function(err, client) {
+//   if (err) throw err;
+//   console.log('Connected to postgres! Getting schemas...');
+
+//   client
+//     .query('SELECT * FROM users;')
+//     .on('row', function(row) {
+//       console.log(JSON.stringify(row));
+//     });
+// });
