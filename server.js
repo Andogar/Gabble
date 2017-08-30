@@ -3,6 +3,7 @@ const mustache = require('mustache-express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
+const pg = require('pg');
 
 const indexController = require('./controllers/index-controller');
 const gabAddController = require('./controllers/gab-add-controller');
@@ -47,7 +48,6 @@ application.listen(application.get('port'), function () {
     console.log('app starting on port: ', application.get('port'))
 });
 
-var pg = require('pg');
 
 pg.defaults.ssl = true;
 pg.connect(process.env.DATABASE_URL, function(err, client) {
